@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflared
+  namespace: traefik
+  labels:
+    app: cloudflared
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cloudflared
+  template:
+    metadata:
+      labels:
+        app: cloudflared
+    spec:
+      containers:
+        - name: cloudflared
+          image: cloudflare/cloudflared:latest
+          args:
+            - tunnel
+            - --no-autoupdate
+            - run
+            - --token
+            - eyJhIjoiYWI1NGUyNjU4Y2E0OTY0NzEwNTY1ODdiYzE5MWQ2ZmUiLCJ0IjoiZWNkMzZjYTItZGIzZi00MzllLWI4ZTUtZDE5ZTc4YjA4ZWU0IiwicyI6Ik1EUTVNR1kyWkRRdFpUSTFOeTAwTUdWaUxUbGpPV1l0TkRGbU9HRTRZVGczWVRneCJ9
+          resources:
+            requests:
+              cpu: 10m
+              memory: 100Mi
+            limits:
+              cpu: 50m
+              memory: 200Mi

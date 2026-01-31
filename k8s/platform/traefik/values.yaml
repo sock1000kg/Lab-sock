@@ -1,0 +1,28 @@
+api:
+  dashboard: true
+  insecure: false # requires Route component to access
+
+# Dont expose cus we have CF Tunnel
+service:
+  type: ClusterIP
+
+gateway:
+  enabled: true
+gatewayClass:
+  enabled: true
+ingressClass:
+  enabled: false
+
+experimental:
+  kubernetesGateway:
+    enabled: true
+
+# Enable GatewayAPI component
+providers:
+  kubernetesGateway:
+    enabled: true
+  kubernetesIngress:
+    enabled: false
+  kubernetesCRD:
+    enabled: true # Keep using IngressRoute for the dashboard
+
