@@ -1,0 +1,17 @@
+global:
+  storageClass: "local-path" # Standard for K3s
+
+auth:
+  database: media_tracker_db
+  username: media_tracker_user
+  existingSecret: media-tracker-postgres
+primary:
+  persistence:
+    size: 5Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi
+    limits:
+      memory: 1Gi
+      cpu: 200m

@@ -1,0 +1,3 @@
+# Set to "0" to disable automatic key rotation.
+# For simplicity, keep only one backup
+keyRenewPeriod: "0"

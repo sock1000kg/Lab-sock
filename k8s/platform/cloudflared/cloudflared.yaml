@@ -22,8 +22,12 @@ spec:
             - tunnel
             - --no-autoupdate
             - run
-            - --token
-            - eyJhIjoiYWI1NGUyNjU4Y2E0OTY0NzEwNTY1ODdiYzE5MWQ2ZmUiLCJ0IjoiZWNkMzZjYTItZGIzZi00MzllLWI4ZTUtZDE5ZTc4YjA4ZWU0IiwicyI6Ik1EUTVNR1kyWkRRdFpUSTFOeTAwTUdWaUxUbGpPV1l0TkRGbU9HRTRZVGczWVRneCJ9
+          env:
+            - name: TUNNEL_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflared-creds
+                  key: token
           resources:
             requests:
               cpu: 10m

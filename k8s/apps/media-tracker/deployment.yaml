@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: media-tracker-app
+  namespace: default
+  labels:
+    app: media-tracker-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: media-tracker-app
+  template:
+    metadata:
+      labels:
+        app: media-tracker-app
+    spec:
+      containers:
+        - name: app
+          image: socknot1000kg/media-tracker-backend:main-95085ae
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000 # app's internal port
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: RATE_LIMIT_ENABLED
+              value: "true"
+          envFrom:
+            - secretRef:
+                name: media-tracker-secret
