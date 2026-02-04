@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: socknot1000kg/media-tracker-backend:main-95085ae
+          image: socknot1000kg/media-tracker-backend:0.1.1
           imagePullPolicy: Always
           ports:
             - containerPort: 5000 # app's internal port
@@ -26,6 +26,8 @@ spec:
               value: "production"
             - name: RATE_LIMIT_ENABLED
               value: "true"
+            - name: VERSION
+              value: "0.1"
           envFrom:
             - secretRef:
                 name: media-tracker-secret
