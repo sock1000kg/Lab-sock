@@ -1,0 +1,15 @@
+[cloud]
+azure_gateway ansible_host=<AZURE_PUBLIC_IP> ansible_user=sockadmin
+
+[metal]
+home_server ansible_host=<LOCAL_SERVER_IP> ansible_user=dat
+
+[cloud:vars]
+ansible_ssh_private_key_file=~/.ssh/azure_rsa
+
+[metal:vars]
+ansible_ssh_private_key_file=~/.ssh/id_ed25519
+
+[all:vars]
+# Global variables for all hosts
+ansible_python_interpreter=/usr/bin/python3

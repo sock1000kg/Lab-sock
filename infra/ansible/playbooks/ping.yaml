@@ -1,0 +1,27 @@
+---
+- name: Infra Connectivity Check
+  hosts: all
+  gather_facts: false # don't need system info, just a handshake
+
+  tasks:
+    - name: Ping the server
+      ansible.builtin.ping:
+
+    - name: Check uptime (verifies SSH command execution)
+      ansible.builtin.command: uptime
+      register: uptime_result
+      changed_when: false
+
+    - name: Print uptime
+      ansible.builtin.debug:
+        msg: "Host is up. Uptime: {{ uptime_result.stdout }}"
+
+    - name: Verify Sudo Access (need this for installation)
+      become: true
+      ansible.builtin.command: whoami
+      register: whoami_result
+      changed_when: false
+
+    - name: Confirm Root
+      ansible.builtin.debug:
+        msg: "Sudo successful. Running as: {{ whoami_result.stdout }}"
