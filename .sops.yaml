@@ -1,0 +1,3 @@
+creation_rules:
+  - path_regex: infra/ansible/inventory/.*_vars/.*\.ya?ml
+    age: "age1whpznfrf87er06ya8xxhl23zf97rddk35kuxl53apdyaw6yqmydq0ay99q"

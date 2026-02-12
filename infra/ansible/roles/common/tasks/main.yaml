@@ -1,0 +1,23 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install baseline tools
+  apt:
+    name:
+      - curl
+      - wget
+      - git
+      - htop
+      - btop
+      - vim
+      - unzip
+      - ripgrep
+      - net-tools # for netstat
+    state: present
+
+- name: Set timezone to UTC (Best practice for servers)
+  timezone:
+    name: Etc/UTC

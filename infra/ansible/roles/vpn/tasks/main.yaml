@@ -1,0 +1,51 @@
+---
+- name: Install WireGuard
+  apt:
+    name: wireguard
+    state: present
+
+- name: Enable IPv4 forwarding
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: "1"
+    state: present
+    reload: yes
+
+# generate keys on the server if missing
+# In a SOPS setup, generate these locally and push them.
+# For now, letting the server generate them is easier.
+- name: Check if private key exists
+  stat:
+    path: /etc/wireguard/privatekey
+  register: private_key_stat
+
+- name: Generate WireGuard keys
+  shell: |
+    umask 077
+    wg genkey |
+    tee /etc/wireguard/privatekey |
+    wg pubkey > /etc/wireguard/publickey
+  when: not private_key_stat.stat.exists
+
+- name: Read Private Key
+  slurp:
+    src: /etc/wireguard/privatekey
+  register: wg_private_key
+
+- name: Read Public Key
+  slurp:
+    src: /etc/wireguard/publickey
+  register: wg_public_key
+
+- name: Configure WireGuard Interface (wg0)
+  template:
+    src: wg0.conf.j2
+    dest: /etc/wireguard/wg0.conf
+    mode: "0600"
+  notify: Restart WireGuard
+
+- name: Ensure WireGuard is running
+  service:
+    name: wg-quick@wg0
+    state: started
+    enabled: yes

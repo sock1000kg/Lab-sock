@@ -1,0 +1,16 @@
+[Interface]
+# The IP address of THIS node (passed via inventory vars)
+Address = {{ vpn_interface_ip }}/24
+PrivateKey = {{ vpn_private_key }}
+
+# Client: Azure VM
+[Peer]
+PublicKey = {{ hub_public_key }}
+Endpoint = {{ hub_endpoint_ip }}:51820
+
+# PersistentKeepalive is needed for devices behind NAT 
+# It pings the Hub every 25s to keep the firewall hole open.
+PersistentKeepalive = 25
+
+# Split Tunnel (Only talk to other VPN devices through the hub)
+AllowedIPs = 10.10.0.0/24

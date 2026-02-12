@@ -1,0 +1,18 @@
+#ENC[AES256_GCM,data:GflXMwHcXtrCoMn2bcRsRA9V1MMshUNLGw==,iv:vSM0nhyueOf/u7p0pvK0WRk9EoSIkgpEu1J3/1/B3gQ=,tag:qxEbSOobwhYgeq5dlHVwgQ==,type:comment]
+vpn_interface_ip: ENC[AES256_GCM,data:g21genlEXiVT,iv:rFPVGNk6g/LGCZNSuPi0bdGOfwSYGyXD5Gi5ACkKHwo=,tag:2Jqdk1pqb9UQuWZ7TuG8xg==,type:str]
+vpn_private_key: ENC[AES256_GCM,data:tyEUfKIOQDVTQxqlXat+Gubvh2hpvA3+Bb8ZEVOXx3utzLBHkH+z6f2Y60U=,iv:JQB+mpDdvRAAlYtfgvmuYEu6C4OMJEoVNH0ElHk+ix0=,tag:yqxKUsubjlvBvMCyF+TTvg==,type:str]
+sops:
+    age:
+        - recipient: age1whpznfrf87er06ya8xxhl23zf97rddk35kuxl53apdyaw6yqmydq0ay99q
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB4Zm1DNUxONEtnb0hxbDND
+            YjN6a1dWVXpHY3lRcWljZ1JLRGltbnJtWEFJCnhaRTBEKzlNcXg4ZndUVS9PcFQy
+            Mm1rT0gwWVZ6QjhleXhnOEJNbHprVTAKLS0tIFJoMHl3UDZqTHIxN2dNa3NzQzF6
+            ZU5Jbi9NcGlKN0dVOE5Gdllodjd3MGsK0vq+Z7AMeK8BsZsvGl7o4n+smo5UxPPd
+            orHeix6nd7TnEC8Gy93fsjvz1YP36MhYghhXsAe/9mcecoEwBXHTBQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2026-02-12T18:40:50Z"
+    mac: ENC[AES256_GCM,data:IDa3hMRgcj6qOB/DZd2duCmFrFnyNkC33INAZi16ezrrOUtExck0uxB6QVFpFGvaVFAbgpIROC5cx5b3ZUBmWl8OT1ZsJq56Em3HAyrdnCGDIFsPOIeBrwWDB0lOD0jTg6pN+ynyrLTKegt1HJm7YHWKBifA0Di1K8bR7+lePl4=,iv:a8a+oXFArCKuYG/njBsHT8cZuJ69dypj+nH1J20JCbk=,tag:jv6nR/fV9KcEPTO8VPX3Bg==,type:str]
+    unencrypted_suffix: _unencrypted
+    version: 3.11.0

@@ -1,0 +1,18 @@
+---
+- name: Install WireGuard
+  apt:
+    name: wireguard
+    state: present
+
+- name: Create WireGuard configuration
+  template:
+    src: wg0-client.conf.j2
+    dest: /etc/wireguard/wg0.conf
+    mode: '0600'
+  notify: Restart WireGuard Client
+
+- name: Ensure WireGuard is running
+  service:
+    name: wg-quick@wg0
+    state: started
+    enabled: yes

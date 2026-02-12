@@ -1,0 +1,35 @@
+---
+- name: Configure Common Layer
+  hosts: all
+  become: true
+  roles:
+    - common
+
+- name: Configure Cloud Gateway
+  hosts: cloud
+  become: true
+  vars:
+    # Run 'wg genkey | tee privatekey | wg pubkey > publickey' on your laptop to get one
+    home_server_public_key: "vlw1OCbAP++PohLTJG71NLNJfwfPiOzb/NyGOY92tW0="
+    laptop_public_key: "JiSzjW0rgUrGg/TsIZA2mpPgJGFFzonaHfu+tJAk00U="
+  roles:
+    - vpn
+  tasks:
+    - name: Fetch Azure Public Key
+      shell: cat /etc/wireguard/publickey
+      register: azure_pub_key
+      changed_when: false
+
+    - name: Set Hub Fact
+      ansible.builtin.set_fact:
+        hub_public_key_fact: "{{ azure_pub_key.stdout }}"
+
+- name: Configure Home Server
+  hosts: metal
+  become: true
+  vars:
+    # Get IP from cloud host
+    hub_endpoint_ip: "{{ hostvars[groups['cloud'][0]]['ansible_host'] }}"
+    hub_public_key: "{{ hostvars[groups['cloud'][0]]['hub_public_key_fact'] }}"
+  roles:
+    - vpn-client
