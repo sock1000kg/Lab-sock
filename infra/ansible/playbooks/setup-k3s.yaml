@@ -1,0 +1,7 @@
+# RUN THIS WITH THE VPN INVENTORY
+---
+- name: Install k3s
+  hosts: metal
+  become: true
+  roles:
+    - k3s

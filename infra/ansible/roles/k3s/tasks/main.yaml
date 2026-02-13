@@ -1,0 +1,34 @@
+# For k3s control panel
+---
+# Disable Traefik (manual Helm install) and ServiceLB (using cloudflare tunnel)
+# tls-san identifies the IP for the API server of the node (allow connection to ansible_host:6443)
+- name: Install k3s
+  shell: |
+    curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" sh -s - \
+    --disable traefik \
+    --disable servicelb \
+    --write-kubeconfig-mode 644 \
+    --node-name home-server \
+    --node-ip {{ ansible_host }} \
+    --tls-san {{ ansible_host }}
+
+- name: Ensure K3s is running
+  service:
+    name: k3s
+    state: started
+    enabled: yes
+
+- name: Fetch Kubeconfig to Work station
+  fetch:
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: ~/.kube/config-sock-lab
+    flat: yes
+  become: true
+
+- name: Update Kubeconfig Server IP
+  delegate_to: localhost
+  become: false
+  replace:
+    path: ~/.kube/config-sock-lab
+    regexp: '127.0.0.1'
+    replace: "{{ ansible_host }}"

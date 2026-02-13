@@ -1,3 +1,4 @@
+# RUN THIS WITH THE PUBLIC INVENTORY
 ---
 - name: Configure Common Layer
   hosts: all
