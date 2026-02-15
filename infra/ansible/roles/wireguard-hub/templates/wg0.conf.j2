@@ -8,9 +8,9 @@ PrivateKey = {{ vpn_private_key['content'] | b64decode | trim }}
 PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
 
-# Client 1: Home Server
+# Client 1: Dell Laptop
 [Peer]
-PublicKey = {{ home_server_public_key }}
+PublicKey = {{ dell_laptop_public_key }}
 AllowedIPs = 10.10.0.2/32
 
 # Client 2: Laptop

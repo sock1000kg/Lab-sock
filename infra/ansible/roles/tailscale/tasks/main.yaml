@@ -1,0 +1,42 @@
+---
+# Verify the repo with this key to prevent man in the middle attacks
+- name: Add Tailscale GPG key
+  apt_key:
+    url: https://pkgs.tailscale.com/stable/ubuntu/jammy.noarmor.gpg
+    keyring: /usr/share/keyrings/tailscale-archive-keyring.gpg
+    state: present
+
+- name: Add Tailscale repository
+  apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/tailscale-archive-keyring.gpg] https://pkgs.tailscale.com/stable/ubuntu/ {{ ansible_distribution_release }} main"
+    filename: tailscale
+    state: present
+
+- name: Install Tailscale
+  apt:
+    name: tailscale
+    state: latest
+    update_cache: yes
+
+- name: Enable Packet Forwarding (for K8s)
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: Check if Tailscale is logged in
+  command: tailscale status
+  register: tailscale_status
+  changed_when: false
+  failed_when: false
+
+- name: Authenticate Tailscale
+  command: >
+    tailscale up
+    --authkey={{ tailscale_auth_key }}
+    --ssh
+    --hostname={{ inventory_hostname }}
+    --accept-routes
+  when: "'Logged out' in tailscale_status.stdout or tailscale_status.rc != 0"

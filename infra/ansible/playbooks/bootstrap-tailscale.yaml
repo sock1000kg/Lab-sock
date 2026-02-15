@@ -1,0 +1,12 @@
+---
+- name: Configure Common Layer
+  hosts: all
+  become: true
+  roles:
+    - common
+
+- name: Configure Tailscale Client
+  hosts: all
+  become: true
+  roles:
+    - tailscale
