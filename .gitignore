@@ -1,6 +1,6 @@
 real-secret.yaml
 master-key-backup.yaml
 terraform.tfvars
-.terraform
+.terraform/
 terraform.tfstate
 terraform.tfstate.backup

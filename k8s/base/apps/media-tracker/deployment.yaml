@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: socknot1000kg/media-tracker-backend:0.1.1
+          image: socknot1000kg/media-tracker-backend:0.1.2
           imagePullPolicy: Always
           ports:
             - containerPort: 5000 # app's internal port

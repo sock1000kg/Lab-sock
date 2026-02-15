@@ -11,6 +11,26 @@
     state: present
     reload: yes
 
+# Because I'm not having the PIP up 24/7, generating the key pair dynamically is better cus they change
+- name: Check if private key exists
+  stat:
+    path: /etc/wireguard/privatekey
+  register: private_key_stat
+
+- name: Generate WireGuard keys
+  shell: |
+    umask 077
+    wg genkey |
+    tee /etc/wireguard/privatekey |
+    wg pubkey > /etc/wireguard/publickey
+  when: not private_key_stat.stat.exists
+
+# For vpn template
+- name: Read Private Key
+  slurp:
+    src: /etc/wireguard/privatekey
+  register: vpn_private_key
+
 - name: Configure WireGuard Interface (wg0)
   template:
     src: wg0.conf.j2
@@ -23,3 +43,18 @@
     name: wg-quick@wg0
     state: started
     enabled: yes
+
+# For vpn-clients template
+- name: Fetch Azure Public Key
+  shell: cat /etc/wireguard/publickey
+  register: azure_pub_key
+  changed_when: false
+
+- name: Set Hub Fact
+  ansible.builtin.set_fact:
+    hub_public_key_fact: "{{ azure_pub_key.stdout }}"
+
+- name: Show Azure Public Key
+  ansible.builtin.debug:
+    var: azure_pub_key.stdout
+

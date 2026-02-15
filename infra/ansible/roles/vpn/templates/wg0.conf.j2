@@ -2,7 +2,7 @@
 Address = 10.10.0.1/24
 SaveConfig = false 
 ListenPort = 51820
-PrivateKey = {{ vpn_private_key }}
+PrivateKey = {{ vpn_private_key['content'] | b64decode | trim }}
 
 # Masquerade traffic (NAT) so the VM acts as a router
 PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
