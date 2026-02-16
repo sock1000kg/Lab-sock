@@ -36,9 +36,3 @@
     regexp: '127.0.0.1'
     replace: "{{ ansible_host }}"
     
-- name: Allow unprivileged users to bind to port 80 (for Traefik)
-  ansible.builtin.sysctl:
-    name: net.ipv4.ip_unprivileged_port_start
-    value: "0"
-    state: present
-    reload: yes
