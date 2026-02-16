@@ -6,16 +6,20 @@ api:
 service:
   type: ClusterIP
 
+ports:
+  web:
+    # CHANGE FROM 8000 TO 80
+    port: 80
+    expose:
+      default: true
+    exposedPort: 80
+
 gateway:
-  enabled: true
+  enabled: false
 gatewayClass:
   enabled: true
 ingressClass:
   enabled: false
-
-experimental:
-  kubernetesGateway:
-    enabled: true
 
 # Enable GatewayAPI component
 providers:
@@ -26,3 +30,17 @@ providers:
   kubernetesCRD:
     enabled: true # Keep using IngressRoute for the dashboard
 
+# Traefik claims port 80 but still runs as non-root
+hostNetwork: true
+
+podSecurityContext:
+  runAsGroup: 65532
+  runAsNonRoot: true
+  runAsUser: 65532
+
+# Allow rolling update without fighting over laptop's ports
+updateStrategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 1
+    maxSurge: 1

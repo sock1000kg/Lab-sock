@@ -10,7 +10,10 @@
     --write-kubeconfig-mode 644 \
     --node-name home-server \
     --node-ip {{ ansible_host }} \
-    --tls-san {{ ansible_host }}
+    --tls-san {{ ansible_host }} \
+    --tls-san 10.0.0.2 \
+    --tls-san 100.84.93.20 \
+    --tls-san internal.sock1000kg.io.vn
 
 - name: Ensure K3s is running
   service:
@@ -32,3 +35,10 @@
     path: ~/.kube/config-sock-lab
     regexp: '127.0.0.1'
     replace: "{{ ansible_host }}"
+    
+- name: Allow unprivileged users to bind to port 80 (for Traefik)
+  ansible.builtin.sysctl:
+    name: net.ipv4.ip_unprivileged_port_start
+    value: "0"
+    state: present
+    reload: yes
