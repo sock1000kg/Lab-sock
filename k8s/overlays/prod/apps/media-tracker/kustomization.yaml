@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Point to the base
+resources:
+  - ../../../../base/apps/media-tracker
+  - sealed-secret.yaml
+
+namespace: prod
+
+configMapGenerator:
+  - name: media-tracker-config
+
+images:
+  - name: socknot1000kg/media-tracker-backend
+    newTag: "0.1.2"
+
+patches:
+  - path: patch-replicas.yaml
+  - path: patch-hostname.yaml

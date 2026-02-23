@@ -1,0 +1,6 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: media-tracker-app
+spec:
+  replicas: 2
