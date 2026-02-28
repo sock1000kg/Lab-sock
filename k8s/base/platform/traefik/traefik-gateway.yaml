@@ -10,8 +10,7 @@ spec:
   listeners:
     - name: web
       protocol: HTTP
-      port: 80 # This is the port 'web' in Traefik's pod
+      port: 8000 # This is the port 'web' in Traefik's pod
       allowedRoutes:
         namespaces:
-          from: All # Allow Routes from 'default' namespace to use this Gateway
-
+          from: All
