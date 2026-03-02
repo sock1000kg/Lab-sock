@@ -12,7 +12,7 @@
   vars:
     # Run umask 077 wg genkey | tee /etc/wireguard/privatekey | wg pubkey > /etc/wireguard/publickey to generate key
     dell_laptop_public_key: "vlw1OCbAP++PohLTJG71NLNJfwfPiOzb/NyGOY92tW0="
-    laptop_public_key: "JiSzjW0rgUrGg/TsIZA2mpPgJGFFzonaHfu+tJAk00U="
+    laptop_public_key: "DK42bkNLBgpSSOBsJGnp8yUb4tbE++hiUmwVKwSDEwA="
   roles:
     - wireguard-hub
 

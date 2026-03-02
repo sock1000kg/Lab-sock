@@ -4,3 +4,6 @@ terraform.tfvars
 .terraform/
 terraform.tfstate
 terraform.tfstate.backup
+.env/
+.venv/
+__pycache__
