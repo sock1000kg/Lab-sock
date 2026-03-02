@@ -8,7 +8,7 @@ Infrastructure as Code (IaC) repository for my bare-metal Kubernetes homelab.
 - [Tech Stack & Key Components](#tech-stack--key-components)
 - [Repository Structure](#repository-structure)
 - [Operations](#operations)
-- [Security Posture](#security-posture)
+- [Planned Components](#planned-components)
 
 ## Architecture Overview
 
@@ -166,7 +166,7 @@ Ensure the WireGuard tunnels are active:
 ```bash
 python3 -m vpn_manager.cli verify
 ```
-## Planned components
+## Planned Components
 - Observability
 - Streamline Helm and Kustomize by running Helm via Kustomize to reduce seperation of workflows
 - Automated GitOps with ArgoCD with full SOPS adoption
