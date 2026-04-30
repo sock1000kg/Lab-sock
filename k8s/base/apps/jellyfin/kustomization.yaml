@@ -22,9 +22,9 @@ helmCharts:
           enabled: true
           storageClass: "local-path" # Using the standard K3s storage class
           accessMode: ReadWriteOnce
-          size: 5Gi
+          size: 10Gi
         media:
           enabled: true
           type: hostPath
           hostPath: /opt/jellyfin/media # The directory you rsynced your music to
-          mountPath: /media
+          MountPath: /media
