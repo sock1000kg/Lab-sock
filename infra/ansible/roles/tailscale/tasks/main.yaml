@@ -1,10 +1,10 @@
 ---
 # Verify the repo with this key to prevent man in the middle attacks
 - name: Add Tailscale GPG key
-  apt_key:
-    url: https://pkgs.tailscale.com/stable/ubuntu/jammy.noarmor.gpg
-    keyring: /usr/share/keyrings/tailscale-archive-keyring.gpg
-    state: present
+  get_url:
+    url: https://pkgs.tailscale.com/stable/ubuntu/{{ ansible_distribution_release }}.noarmor.gpg
+    dest: /usr/share/keyrings/tailscale-archive-keyring.gpg
+    mode: '0644'
 
 - name: Add Tailscale repository
   apt_repository:
