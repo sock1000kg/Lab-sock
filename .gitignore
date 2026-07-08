@@ -7,4 +7,3 @@ terraform.tfstate.backup
 .env/
 .venv/
 __pycache__
-**/charts/jellyfin-*/

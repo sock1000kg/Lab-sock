@@ -5,6 +5,8 @@ namespace: media
 
 resources:
   - route.yaml
+  - config-pv.yaml
+  - config-pvc.yaml
 
 helmCharts:
   - name: jellyfin
@@ -23,9 +25,7 @@ helmCharts:
       persistence:
         config:
           enabled: true
-          storageClass: "local-path" # Using the standard K3s storage class
-          accessMode: ReadWriteOnce
-          size: 10Gi
+          existingClaim: jellyfin-config-hostpath
         media:
           enabled: true
           type: hostPath
