@@ -6,7 +6,7 @@ resources:
   - ../../../../base/apps/media-tracker
   - sealed-secret.yaml
 
-namespace: prod
+namespace: media-prod
 
 configMapGenerator:
   - name: media-tracker-config

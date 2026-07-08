@@ -53,6 +53,41 @@ graph TD
 
 ### System architecture
 
+graph TD
+
+    %% External actors
+    Public[Public Users]
+    Admin[Admin / Devs]
+
+    %% Edge Layer
+    CF[Cloudflare Edge]
+
+    %% Ingress Layer
+    Traefik[Traefik Gateway API]
+    TraefikTS[Traefik-Tailscale Gateway]
+
+    %% Applications
+    MediaProd[MediaTracker Prod]
+    MediaDev[MediaTracker Dev]
+    InternalApps[Internal Apps]
+
+    %% Data
+    DBDev[(PostgreSQL)]
+    DBProd[(PostgreSQL)]
+
+    %% Public flow
+    Public -->|HTTPS| CF
+    CF -->|Tunnel| Traefik
+    Traefik --> MediaProd
+    Traefik -->|CF Access| MediaDev
+
+    %% Admin flow
+    Admin -->|Tailscale| TraefikTS
+    TraefikTS --> InternalApps
+
+    %% Data layer
+    MediaProd --> DBProd
+    MediaDev --> DBDev
 ```mermaid
 graph TD
 

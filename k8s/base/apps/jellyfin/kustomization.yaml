@@ -13,6 +13,9 @@ helmCharts:
     releaseName: jellyfin
     namespace: media
     valuesInline:
+      nodeSelector:
+        kubernetes.io/hostname: home-server
+
       ingress:
         main:
           enabled: false

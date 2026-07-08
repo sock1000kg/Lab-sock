@@ -6,6 +6,8 @@ auth:
   username: media_tracker_user
   existingSecret: media-tracker-postgres
 primary:
+  nodeSelector:
+    kubernetes.io/hostname: home-server
   persistence:
     size: 5Gi
   resources:

@@ -7,8 +7,9 @@ service:
   type: ClusterIP
   additionalServices:
     tailscale:
-      type: LoadBalancer
+      type: LoadBalancer # MUST BE HERE
       spec:
+        type: LoadBalancer # AND EXPLICITLY HERE to override the global ClusterIP
         loadBalancerClass: tailscale
 
 ports:
@@ -41,3 +42,7 @@ updateStrategy:
   rollingUpdate:
     maxUnavailable: 1
     maxSurge: 1
+
+accessLog:
+  enabled: true
+  format: json
