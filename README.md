@@ -26,33 +26,35 @@ graph TD
     %% Cloud Layer
     subgraph Cloud
         CF[Cloudflare Edge]
-        AzureVM[Azure B1s VM<br/>WireGuard Hub]
+        TS[Tailscale]
     end
+
+    Workstation[Workstation<br/>]
 
     %% Home Network
     subgraph Home Network
-        Workstation[Workstation<br/>]
-        Server[Dell Inspiron<br/>K3s Node]
+        Server1[Dell Laptop<br/>K3s Control plane]
+        Server2[Dell PC<br/>K3s Agent]
     end
 
     %% Public traffic
     Public -->|HTTPS| CF
-    CF -->|Cloudflared Tunnel| Server
+    CF -->|Cloudflared Tunnel| Server1
 
     %% Admin access
     Admin --> Workstation
 
-    %% WireGuard mesh
-    Workstation <-->|WireGuard| AzureVM
-    Server <-->|WireGuard| AzureVM
-
     %% Management
-    Workstation -.->|Terraform / Ansible| AzureVM
-    Workstation -.->|Tailscale / LAN| Server
+    Workstation -.->|LAN| Server1
+    Workstation -.-> TS
+    TS -.-> Server1
+
+    Server1 <--> Server2
 ```
 
 ### System architecture
 
+```mermaid
 graph TD
 
     %% External actors
@@ -88,41 +90,6 @@ graph TD
     %% Data layer
     MediaProd --> DBProd
     MediaDev --> DBDev
-```mermaid
-graph TD
-
-    %% External actors
-    Public[Public Users]
-    Admin[Admin / Devs]
-
-    %% Edge Layer
-    CF[Cloudflare Edge]
-
-    %% Ingress Layer
-    Traefik[Traefik Gateway API]
-    TraefikTS[Traefik-Tailscale Gateway]
-
-    %% Applications
-    MediaProd[MediaTracker Prod]
-    MediaDev[MediaTracker Dev]
-    InternalApps[Internal Apps]
-
-    %% Data
-    DB[(PostgreSQL)]
-
-    %% Public flow
-    Public -->|HTTPS| CF
-    CF -->|Tunnel| Traefik
-    Traefik --> MediaProd
-    Traefik -->|CF Access| MediaDev
-
-    %% Admin flow
-    Admin -->|Tailscale| TraefikTS
-    TraefikTS --> InternalApps
-
-    %% Data layer
-    MediaProd --> DB
-    MediaDev --> DB
 ```
 
 ## Tech Stack & Key Components
