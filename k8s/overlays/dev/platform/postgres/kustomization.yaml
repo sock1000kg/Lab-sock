@@ -6,3 +6,4 @@ namespace: media-dev
 
 resources:
   - ../../../../base/platform/postgres
+  - namespace.yaml

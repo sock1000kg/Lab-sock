@@ -6,3 +6,4 @@ namespace: media-prod
 
 resources:
   - ../../../../base/platform/postgres
+  - namespace.yaml
