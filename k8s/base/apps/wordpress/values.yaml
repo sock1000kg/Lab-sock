@@ -1,0 +1,42 @@
+wordpressBlogName: "sock1000kg"
+wordpressUsername: "admin"
+wordpressEmail: "dat.pham.9306@gmail.com"
+
+# secret for frontend admin
+auth:
+  existingSecret: "wordpress-passwords"
+
+# WordPress App Pod Settings
+nodeSelector:
+  kubernetes.io/hostname: home-server
+persistence:
+  enabled: true
+  existingClaim: "pvc-wordpress-app"
+resources:
+  requests:
+    cpu: 100m
+    memory: 512Mi
+  limits:
+    cpu: 500m
+    memory: 1Gi
+
+# Bind the database secrets and settings
+mariadb:
+  auth:
+    existingSecret: "wordpress-passwords"
+  primary:
+    nodeSelector:
+      kubernetes.io/hostname: home-server
+    persistence:
+      enabled: true
+      existingClaim: "pvc-wordpress-db"
+
+wordpressScheme: https
+
+wordpressExtraConfigContent: |
+  // Force WordPress to recognize the Cloudflare Tunnel HTTPS termination
+  $_SERVER['HTTPS'] = 'on';
+
+  // Hardcode secure URLs to override dynamic generation
+  define('WP_HOME', 'https://sock1000kg.io.vn');
+  define('WP_SITEURL', 'https://sock1000kg.io.vn');
