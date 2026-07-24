@@ -97,17 +97,18 @@ graph TD
 
 ### Hardware
 
-- **Workstation:** My school laptop 
+- **Workstation:** My personal laptop 
 - **Bare-Metal Server:** Dell Inspiron 15-3567 (Ubuntu Server)  
-- **Cloud Node:** Azure B1s
+- **Observability Node:** Dell PC (Ubuntu Server)
 
 
 ### Infrastructure & Automation
 
 - **Kubernetes:** K3s (Single Node)  
-- **IaC:** Terraform (Azure provisioning with local state to reduce costs)  
+- **IaC:** Terraform (Azure provisioning with local state - experiment only)  
 - **Configuration Management:** Ansible (Server baselining, VPN configuration, K3s bootstrapping)  
-- **Automation:** Python CLI (`vpn_manager`) to dynamically spin up/down the Azure WireGuard Hub
+- **Automation:** Python CLI (`vpn_manager`) to dynamically spin up/down the Azure WireGuard Hub - experiment only
+
 
 
 ### Networking
@@ -115,11 +116,11 @@ graph TD
 - **Ingress Controller:** Traefik (Gateway API)
 - **Public Access:** Cloudflare Tunnel -> Traefik
 - **Internal Access:** Tailscale Kubernetes Operator → Traefik
-- **Peering:** WireGuard (Hub-and-Spoke architecture via Azure)
+- **Peering:** WireGuard (Hub-and-Spoke architecture via Azure) - experiment only
 
 ### GitOps & Secrets
 
-- **Cluster Management:** Kustomize (Base/Overlay pattern for Dev and Prod environments)  
+- **Cluster Management:** Kustomize (Base/Overlay pattern for Dev and Prod environments), Helm (Generate vendor charts and applied via Kustomize) 
 - **Secret Management:**  
   - Bitnami Sealed Secrets (for Kubernetes manifests)  
   - Mozilla SOPS + Age (for Ansible inventory and variable encryption)
@@ -128,7 +129,9 @@ graph TD
 ### Hosted Services
 
 - **MediaTracker:** Full-stack media management platform (Node.js/TypeScript backend). Deployed across isolated `dev` and `prod` namespaces.
-- **Databases:** Bitnami PostgreSQL (Helm)
+- **Databases:** Bitnami PostgreSQL
+- Wordpress: My personal website
+- Jellyfin: Media player
 
 
 ## Repository Structure
@@ -148,7 +151,7 @@ graph TD
 
 ## Operations
 
-Because the Azure B1s node incurs costs, the architecture is designed to spin up the cloud VPN hub on demand using a custom Python automation script.
+Because the Azure B1s node incurs costs, the experimental architecture is designed to spin up the cloud VPN hub on demand using a custom Python automation script.
 
 ### Spin Up the VPN Hub
 
@@ -169,9 +172,7 @@ Ensure the WireGuard tunnels are active:
 python3 -m vpn_manager.cli verify
 ```
 ## Planned Components
-- Observability
-- Streamline Helm and Kustomize by running Helm via Kustomize to reduce seperation of workflows
 - Automated GitOps with ArgoCD with full SOPS adoption
 - More services
 - Database backups
-- Documentation of failure modes
+- Chaos Testing
