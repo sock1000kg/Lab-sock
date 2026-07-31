@@ -7,3 +7,5 @@ terraform.tfstate.backup
 .env/
 .venv/
 __pycache__
+/k8s/base/platform/**/charts/
+/k8s/base/apps/**/charts/
