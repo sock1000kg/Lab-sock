@@ -9,3 +9,4 @@ terraform.tfstate.backup
 __pycache__
 /k8s/base/platform/**/charts/
 /k8s/base/apps/**/charts/
+/k8s/base/observability/**/charts/

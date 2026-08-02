@@ -1,0 +1,22 @@
+mode: daemonset
+presets:
+  logsCollection:
+    enabled: true
+    storeCheckpoints: false
+config:
+  exporters:
+    otlphttp:
+      # Point to the native OTLP endpoint on Loki service (Loki exporter is deprecated)
+      endpoint: "http://loki.observability.svc.cluster.local:3100/otlp"
+      tls:
+        insecure: true # Usually required for internal cluster HTTP communication
+  service:
+    pipelines:
+      logs:
+        receivers: [filelog]
+        processors: [batch]
+        exporters: [otlphttp]
+      metrics: null
+      traces: null
+image:
+  repository: otel/opentelemetry-collector-contrib

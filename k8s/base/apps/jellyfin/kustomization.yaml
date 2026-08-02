@@ -29,5 +29,5 @@ helmCharts:
         media:
           enabled: true
           type: hostPath
-          hostPath: /opt/jellyfin/media # The directory you rsynced your music to
+          hostPath: /opt/jellyfin/media
           MountPath: /media

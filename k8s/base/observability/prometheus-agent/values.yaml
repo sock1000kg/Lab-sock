@@ -1,0 +1,30 @@
+# Prometheus only acts as a scraper that pushes data without storing local data
+server:
+  replicaCount: 1
+  statefulSet:
+    enabled: false
+  daemonSet:
+    enabled: false
+
+  defaultFlagsOverride:
+    - --agent
+    - --web.enable-lifecycle
+    - --config.file=/etc/config/prometheus.yml
+    - --storage.agent.path=/prometheus
+
+  remoteWrite:
+    - url: http://victoria-metrics-single-server.observability.svc.cluster.local:8428/api/v1/write
+
+  persistentVolume:
+    enabled: false
+
+prometheus-pushgateway:
+  enabled: false
+
+# Strip the forbidden server configurations for agent mode
+serverFiles:
+  prometheus.yml:
+    rule_files: null
+    alerting: null
+alertmanager:
+  enabled: false

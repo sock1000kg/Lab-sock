@@ -1,0 +1,13 @@
+server:
+  retentionPeriod: 7d
+  persistentVolume:
+    enabled: true
+    size: 15Gi
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: node-role.kubernetes.io/observability
+                operator: In
+                values: ["true"]
