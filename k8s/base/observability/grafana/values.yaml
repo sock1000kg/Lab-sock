@@ -3,6 +3,16 @@ admin:
   userKey: admin-user
   passwordKey: admin-password
 
+persistence:
+  enabled: true
+  size: 10Gi
+
+initChownData:
+  ## If false, data ownership will not be reset at startup
+  ## This allows the grafana-server to be run with an arbitrary user
+  ##
+  enabled: false
+
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
