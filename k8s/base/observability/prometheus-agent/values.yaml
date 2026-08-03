@@ -13,7 +13,7 @@ server:
     - --storage.agent.path=/prometheus
 
   remoteWrite:
-    - url: http://victoria-metrics-single-server.observability.svc.cluster.local:8428/api/v1/write
+    - url: http://victoria-metrics-victoria-metrics-single-server.observability.svc.cluster.local:8428/api/v1/write
 
   persistentVolume:
     enabled: false
@@ -24,7 +24,7 @@ prometheus-pushgateway:
 # Strip the forbidden server configurations for agent mode
 serverFiles:
   prometheus.yml:
-    rule_files: null
-    alerting: null
+    rule_files: []
+    alerting: {}
 alertmanager:
   enabled: false

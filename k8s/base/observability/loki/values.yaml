@@ -83,6 +83,9 @@ write:
   replicas: 0
 
 # Disable distributed-mode components
+gateway:
+  enabled: false
+
 ingester:
   replicas: 0
 

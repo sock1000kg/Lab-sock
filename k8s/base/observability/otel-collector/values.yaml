@@ -3,19 +3,52 @@ presets:
   logsCollection:
     enabled: true
     storeCheckpoints: false
+  kubernetesAttributes:
+    enabled: true
+    extractAllPodLabels: true
+    extractAllPodAnnotations: true
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 200Mi
+
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
 config:
+  processors:
+    memory_limiter:
+      check_interval: 1s
+      limit_mib: 400
+      spike_limit_mib: 100
+    resource/promtail:
+      attributes:
+        - action: insert
+          from_attribute: k8s.namespace.name
+          key: namespace
+        - action: insert
+          from_attribute: k8s.pod.name
+          key: pod
+        - action: insert
+          from_attribute: k8s.container.name
+          key: container
+        - action: insert
+          from_attribute: k8s.deployment.name
+          key: app
   exporters:
-    otlphttp:
+    otlp_http:
       # Point to the native OTLP endpoint on Loki service (Loki exporter is deprecated)
-      endpoint: "http://loki.observability.svc.cluster.local:3100/otlp"
+      logs_endpoint: "http://loki.observability.svc.cluster.local:3100/otlp/v1/logs"
       tls:
         insecure: true # Usually required for internal cluster HTTP communication
   service:
     pipelines:
       logs:
         receivers: [filelog]
-        processors: [batch]
-        exporters: [otlphttp]
+        processors: [memory_limiter, k8sattributes, resource/promtail, batch]
+        exporters: [debug, otlp_http]
       metrics: null
       traces: null
 image:
