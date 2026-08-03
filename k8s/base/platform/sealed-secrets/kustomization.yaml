@@ -6,7 +6,7 @@ namespace: kube-system
 helmCharts:
   - name: sealed-secrets
     repo: https://bitnami.github.io/sealed-secrets
-    version: 2.18.3
+    version: 2.19.1
     releaseName: sealed-secrets
     namespace: kube-system
     valuesFile: values.yaml
