@@ -46,3 +46,11 @@ updateStrategy:
 accessLog:
   enabled: true
   format: json
+
+resources:
+  limits:
+    cpu: 300m
+    memory: 256Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi

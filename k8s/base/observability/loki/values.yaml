@@ -62,6 +62,13 @@ singleBinary:
               - key: node-role.kubernetes.io/observability
                 operator: In
                 values: ["true"]
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 256Mi
 
 chunksCache:
   enabled: false

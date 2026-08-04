@@ -1,5 +1,13 @@
 # Prometheus only acts as a scraper that pushes data without storing local data
 server:
+  resources:
+    limits:
+      cpu: 300m
+      memory: 256Mi
+    requests:
+      cpu: 50m
+      memory: 64Mi
+
   replicaCount: 1
   statefulSet:
     enabled: false

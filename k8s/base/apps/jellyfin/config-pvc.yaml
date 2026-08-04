@@ -12,4 +12,5 @@ spec:
 
   resources:
     requests:
-      storage: 10Gi
+      # PVC is 5Gi but the actual bound PV is 10Gi cus I'm stupid
+      storage: 5Gi

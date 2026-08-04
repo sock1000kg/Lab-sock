@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - traefik-gateway.yaml
-  - routes/traefik-dashboard-route.yaml
+  - ingress-routes/traefik-dashboard-route.yaml
 
 helmCharts:
   - name: traefik

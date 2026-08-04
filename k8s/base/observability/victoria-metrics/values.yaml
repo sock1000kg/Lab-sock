@@ -1,4 +1,12 @@
 server:
+  resources:
+  limits:
+    cpu: 500m
+    memory: 768Mi
+  requests:
+    cpu: 50m
+    memory: 128Mi
+
   retentionPeriod: 7d
   persistentVolume:
     enabled: true

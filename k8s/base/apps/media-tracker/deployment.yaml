@@ -13,7 +13,7 @@ spec:
         app: media-tracker-app
     spec:
       containers:
-        - name: app
+        - name: media-tracker-app
           image: socknot1000kg/media-tracker-backend
           imagePullPolicy: Always
           ports:
@@ -23,3 +23,10 @@ spec:
                 name: media-tracker-secret
             - configMapRef:
                 name: media-tracker-config
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
