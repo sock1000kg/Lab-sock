@@ -33,7 +33,7 @@ config:
       logs:
         receivers: [filelog]
         processors: [memory_limiter, k8sattributes, batch]
-        exporters: [debug, otlp_http]
+        exporters: [otlp_http]
       metrics: null
       traces: null
 image:
