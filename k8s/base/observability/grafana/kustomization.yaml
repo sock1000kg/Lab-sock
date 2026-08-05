@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - sealed-secret.yaml
+  - route.yaml
 
 helmCharts:
   - name: grafana

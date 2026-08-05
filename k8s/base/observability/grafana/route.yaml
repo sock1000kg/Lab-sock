@@ -1,19 +1,19 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: jellyfin-route
+  name: grafana-route
   namespace: media
 spec:
   parentRefs:
     - name: traefik-gateway
       namespace: traefik
   hostnames:
-    - "jellyfin.internal.sock1000kg.io.vn"
+    - "grafana.internal.sock1000kg.io.vn"
   rules:
     - matches:
         - path:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: jellyfin
-          port: 8096
+        - name: grafana
+          port: 80
